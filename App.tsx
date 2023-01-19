@@ -1,13 +1,32 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Root from "./src/screens/Root";
+import CustomDrawerContent from "./src/components/complex/CustomDrawerContent";
+import { Dimensions } from "react-native";
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-blue-500 bg-red-300">
-        Open up App.js to start working on your app!
-      </Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Drawer.Navigator
+        screenOptions={{
+          drawerStyle: {
+            width: Dimensions.get("window").width * 0.7,
+          },
+        }}
+        useLegacyImplementation
+        drawerContent={() => <CustomDrawerContent />}
+      >
+        <Drawer.Screen
+          name="Root"
+          component={Root}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
