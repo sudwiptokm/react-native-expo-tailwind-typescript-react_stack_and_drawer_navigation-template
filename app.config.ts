@@ -6,6 +6,8 @@ import { ExpoConfig } from "expo/config";
 const config: ExpoConfig = {
   name: "my-app",
   slug: "my-app",
+  scheme: "my-circle",
+  plugins: ["expo-router"],
 };
 
 export default config;

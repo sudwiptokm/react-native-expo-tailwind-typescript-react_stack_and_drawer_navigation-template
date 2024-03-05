@@ -1,9 +1,10 @@
 import "react-native-gesture-handler";
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import Root from "./src/screens/Root";
+
 import CustomDrawerContent from "./src/components/complex/CustomDrawerContent";
 import { Dimensions } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import Root from "./src/screens/Root";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Drawer = createDrawerNavigator();
 
@@ -16,7 +17,6 @@ export default function App() {
             width: Dimensions.get("window").width * 0.7,
           },
         }}
-        useLegacyImplementation
         drawerContent={() => <CustomDrawerContent />}
       >
         <Drawer.Screen
