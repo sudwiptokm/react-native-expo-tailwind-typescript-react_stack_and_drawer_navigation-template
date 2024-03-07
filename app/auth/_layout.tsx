@@ -8,7 +8,7 @@ type Props = object;
 const Layout = (props: Props) => {
   return (
     <SafeAreaView>
-      <Pressable onPress={() => router.back()}>
+      <Pressable onPress={() => router.back()} className="mb-6">
         <MaterialIcons name="chevron-left" size={32} color="white" />
       </Pressable>
       <Slot />

@@ -8,7 +8,7 @@ type Props = object;
 const Register = (props: Props) => {
   return (
     <View>
-      <PText>Register</PText>
+      <PText className="font-medium text-xl text-center">Register</PText>
     </View>
   );
 };
