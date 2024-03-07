@@ -15,6 +15,7 @@ const _layout = (props: Props) => {
       }}
     >
       <Stack.Screen name="index" />
+      <Stack.Screen name="auth" />
       <Stack.Screen name="(drawer)" />
       <Stack.Screen name="test" />
       <Stack.Screen name="(app)/home" />

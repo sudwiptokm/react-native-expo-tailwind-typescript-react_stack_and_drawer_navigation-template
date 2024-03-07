@@ -1,10 +1,11 @@
 import PrimaryButton from "@components/modular/molecular/buttons/PrimaryButton";
 import PText from "@components/modular/molecular/texts/PText";
+import { router } from "expo-router";
 import React, { useEffect } from "react";
 import { SafeAreaView, View } from "react-native";
 import PagerView from "react-native-pager-view";
 
-// import Logo from "../assets/images/zen_check.svg";
+import Logo from "../assets/images/zen_check.svg";
 
 type Props = object;
 
@@ -37,18 +38,18 @@ const Index = (props: Props) => {
   let timer: NodeJS.Timer;
   const pagerViewRef = React.useRef<PagerView>(null);
 
-  useEffect(() => {
-    clearInterval(timer);
-    timer = setInterval(() => {
-      setActiveCarousel((prev) => {
-        if (prev === 2) {
-          return 0;
-        } else {
-          return prev + 1;
-        }
-      });
-    }, 3000);
-  }, []);
+  // useEffect(() => {
+  //   timer = setInterval(() => {
+  //     setActiveCarousel((prev) => {
+  //       if (prev === 2) {
+  //         return 0;
+  //       } else {
+  //         return prev + 1;
+  //       }
+  //     });
+  //   }, 3000);
+  //   clearInterval(timer);
+  // }, []);
 
   useEffect(() => {
     pagerViewRef.current?.setPage(activeCarousel);
@@ -56,7 +57,7 @@ const Index = (props: Props) => {
 
   return (
     <SafeAreaView className="flex-1">
-      <PText className="text-center text-3xl font-bold mt-6">
+      <PText className="text-center text-3xl font-bold mt-10">
         Welcome to ZenCheck
       </PText>
       <PText className="text-center mt-6">
@@ -64,10 +65,12 @@ const Index = (props: Props) => {
       </PText>
 
       {/* Logo */}
-      {/* <Logo width={200} height={200} /> */}
+      <View className="mt-10 justify-end items-center ">
+        <Logo />
+      </View>
 
       {/* Carousel */}
-      <View className="flex-1">
+      <View className="flex-1 justify-center ">
         <PagerView
           style={{ flex: 0.5 }}
           initialPage={activeCarousel}
@@ -80,7 +83,7 @@ const Index = (props: Props) => {
             <PText className="text-center text-xl font-bold">
               Manage your tasks
             </PText>
-            <PText className="text-center mt-6">
+            <PText className="text-center mt-6 text-nowrap">
               You can easily manage all of your daily tasks in DoMe for free
             </PText>
           </View>
@@ -104,14 +107,27 @@ const Index = (props: Props) => {
           </View>
         </PagerView>
       </View>
-      <View className="flex-row gap-x-4 items-center">
-        <PrimaryButton title="Login" onPress={() => {}} fullWidth />
-        <PrimaryButton
-          title="Register"
-          onPress={() => {}}
-          fullWidth
-          variant="outline"
-        />
+      <View className="flex-1 justify-between">
+        <IndicatorBar activeCarousel={activeCarousel} />
+        <View className="flex-row gap-x-4 items-center mb-6">
+          <PrimaryButton
+            title="Login"
+            onPress={() => {
+              clearTimeout(timer);
+              router.push("auth/login");
+            }}
+            fullWidth
+          />
+          <PrimaryButton
+            title="Register"
+            onPress={() => {
+              clearTimeout(timer);
+              router.push("auth/register");
+            }}
+            fullWidth
+            variant="outline"
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
