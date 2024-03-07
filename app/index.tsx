@@ -1,10 +1,10 @@
+import React, { useEffect } from "react";
+import { SafeAreaView, View } from "react-native";
+
 import PrimaryButton from "@components/modular/molecular/buttons/PrimaryButton";
 import PText from "@components/modular/molecular/texts/PText";
 import { router } from "expo-router";
-import React, { useEffect } from "react";
-import { SafeAreaView, View } from "react-native";
 import PagerView from "react-native-pager-view";
-
 import Logo from "../assets/images/zen_check.svg";
 
 type Props = object;
@@ -38,18 +38,17 @@ const Index = (props: Props) => {
   let timer: NodeJS.Timer;
   const pagerViewRef = React.useRef<PagerView>(null);
 
-  // useEffect(() => {
-  //   timer = setInterval(() => {
-  //     setActiveCarousel((prev) => {
-  //       if (prev === 2) {
-  //         return 0;
-  //       } else {
-  //         return prev + 1;
-  //       }
-  //     });
-  //   }, 3000);
-  //   clearInterval(timer);
-  // }, []);
+  useEffect(() => {
+    timer = setInterval(() => {
+      setActiveCarousel((prev) => {
+        if (prev === 2) {
+          return 0;
+        } else {
+          return prev + 1;
+        }
+      });
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     pagerViewRef.current?.setPage(activeCarousel);
@@ -98,11 +97,11 @@ const Index = (props: Props) => {
           </View>
           <View className="flex-1 justify-center items-center" key="3">
             <PText className="text-center text-xl font-bold">
-              Create daily routine
+              Organize your tasks
             </PText>
             <PText className="text-center mt-6">
-              In ZenCheck you can create your personalized routine to stay
-              productive
+              You can organize your daily tasks by adding your tasks into
+              separate categories
             </PText>
           </View>
         </PagerView>
@@ -116,7 +115,7 @@ const Index = (props: Props) => {
               clearTimeout(timer);
               router.push("auth/login");
             }}
-            fullWidth
+            className="flex-1"
           />
           <PrimaryButton
             title="Register"
@@ -124,8 +123,8 @@ const Index = (props: Props) => {
               clearTimeout(timer);
               router.push("auth/register");
             }}
-            fullWidth
             variant="outline"
+            className="flex-1"
           />
         </View>
       </View>

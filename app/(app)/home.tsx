@@ -1,10 +1,7 @@
-import { DrawerActions } from "@react-navigation/native";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
 import AddTaskComponent from "../../src/components/modular/AddTaskComponent";
-import Button from "../../src/components/modular/Button";
 import Gap from "../../src/components/modular/Gap";
 import TaskView from "../../src/components/modular/TaskView";
 import { taskData } from "../../src/utils/data";
@@ -66,11 +63,11 @@ const Index = (props: Props) => {
             <AddTaskComponent addTask={addTask} cancel={setShowAddButton} />
           )}
         </View>
-        <Button onPress={() => router.push("/(drawer)")} title="Go Test" />
+        {/* <Button onPress={() => router.push("/(drawer)")} title="Go Test" />
         <Button
           onPress={() => DrawerActions.openDrawer()}
           title="Open Drawer"
-        />
+        /> */}
       </View>
     </SafeAreaView>
   );

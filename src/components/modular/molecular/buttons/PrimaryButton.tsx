@@ -1,14 +1,13 @@
 import React from "react";
 import { Pressable } from "react-native";
 import { twMerge } from "tailwind-merge";
-
 import PText from "../texts/PText";
 
 type Props = {
   title: string;
   onPress: () => void;
   variant?: "solid" | "outline";
-  fullWidth?: boolean;
+  className?: string;
 };
 
 const variantClassNames = {
@@ -17,14 +16,14 @@ const variantClassNames = {
 };
 
 const PrimaryButton = (props: Props) => {
-  const className = variantClassNames[props.variant || "solid"];
+  const cn = variantClassNames[props.variant || "solid"];
 
   return (
     <Pressable
       className={twMerge(
         "py-2 items-center rounded-lg px-4",
-        className,
-        props.fullWidth && "flex-1",
+        cn,
+        props.className
       )}
       onPress={props.onPress}
     >

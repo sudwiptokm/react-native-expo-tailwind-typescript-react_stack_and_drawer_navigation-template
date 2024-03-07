@@ -2,10 +2,23 @@ import "../global.css";
 
 import { Stack } from "expo-router";
 import React from "react";
+import {
+  MD3DarkTheme as DefaultTheme,
+  PaperProvider,
+} from "react-native-paper";
 
 type Props = object;
 
-const _layout = (props: Props) => {
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#89C223",
+    secondary: "yellow",
+  },
+};
+
+const Stacks = (props: Props) => {
   return (
     <Stack
       initialRouteName="index"
@@ -16,10 +29,15 @@ const _layout = (props: Props) => {
     >
       <Stack.Screen name="index" />
       <Stack.Screen name="auth" />
-      <Stack.Screen name="(drawer)" />
-      <Stack.Screen name="test" />
-      <Stack.Screen name="(app)/home" />
     </Stack>
+  );
+};
+
+const _layout = (props: Props) => {
+  return (
+    <PaperProvider theme={theme}>
+      <Stacks />
+    </PaperProvider>
   );
 };
 
