@@ -11,7 +11,7 @@ const _layout = (props: Props) => {
       initialRouteName="index"
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: "#121212" },
+        contentStyle: { backgroundColor: "#121212", paddingHorizontal: 24 },
       }}
     >
       <Stack.Screen name="index" />
