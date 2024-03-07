@@ -3,7 +3,7 @@ import "../global.css";
 import { Stack } from "expo-router";
 import React from "react";
 
-type Props = {};
+type Props = object;
 
 const _layout = (props: Props) => {
   return (
@@ -11,6 +11,7 @@ const _layout = (props: Props) => {
       initialRouteName="index"
       screenOptions={{
         headerShown: false,
+        contentStyle: { backgroundColor: "#121212" },
       }}
     >
       <Stack.Screen name="index" />

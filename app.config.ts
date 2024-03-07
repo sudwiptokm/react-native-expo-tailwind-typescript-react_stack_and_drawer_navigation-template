@@ -9,6 +9,7 @@ const config: ExpoConfig = {
   scheme: "my-circle",
   plugins: ["expo-router"],
   userInterfaceStyle: "dark",
+  backgroundColor: "#121212",
 };
 
 export default config;

@@ -1,8 +1,8 @@
+import { DrawerActions } from "@react-navigation/native";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
-import { DrawerActions } from "@react-navigation/native";
-import { router } from "expo-router";
 import AddTaskComponent from "../../src/components/modular/AddTaskComponent";
 import Button from "../../src/components/modular/Button";
 import Gap from "../../src/components/modular/Gap";
@@ -10,21 +10,21 @@ import TaskView from "../../src/components/modular/TaskView";
 import { taskData } from "../../src/utils/data";
 import { Task_Data_Type } from "../../src/utils/types";
 
-type Props = {};
+type Props = object;
 
-const index = (props: Props) => {
+const Index = (props: Props) => {
   const [tasks, setTasks] = useState<Task_Data_Type[]>(taskData);
   const [showAddButton, setShowAddButton] = useState(true);
 
   const addTask = (name: string) => {
-    let task = { name: name };
-    let copy_arr = [...tasks];
+    const task = { name };
+    const copy_arr = [...tasks];
     copy_arr.push(task);
     setTasks(copy_arr);
   };
 
   const removeTask = (id: number) => {
-    let copy_arr = [...tasks];
+    const copy_arr = [...tasks];
     copy_arr.splice(id, 1);
     setTasks(copy_arr);
   };
@@ -76,4 +76,4 @@ const index = (props: Props) => {
   );
 };
 
-export default index;
+export default Index;
