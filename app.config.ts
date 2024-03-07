@@ -8,6 +8,7 @@ const config: ExpoConfig = {
   slug: "my-app",
   scheme: "my-circle",
   plugins: ["expo-router"],
+  userInterfaceStyle: "dark",
 };
 
 export default config;

@@ -1,17 +1,18 @@
-import { View, Text, Button, SafeAreaView, StatusBar } from "react-native";
 import React, { useState } from "react";
-import TaskView from "../components/modular/TaskView";
-import { taskData } from "../utils/data";
-import { Task_Data_Type } from "../utils/types";
-import Gap from "../components/modular/Gap";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import AddTaskComponent from "../components/modular/AddTaskComponent";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 
-type Props = {
-  navigation: { openDrawer: () => void; navigate: (name: string) => void };
-};
+import { DrawerActions } from "@react-navigation/native";
+import { router } from "expo-router";
+import AddTaskComponent from "../../src/components/modular/AddTaskComponent";
+import Button from "../../src/components/modular/Button";
+import Gap from "../../src/components/modular/Gap";
+import TaskView from "../../src/components/modular/TaskView";
+import { taskData } from "../../src/utils/data";
+import { Task_Data_Type } from "../../src/utils/types";
 
-const HomeScreen = ({ navigation }: Props) => {
+type Props = {};
+
+const index = (props: Props) => {
   const [tasks, setTasks] = useState<Task_Data_Type[]>(taskData);
   const [showAddButton, setShowAddButton] = useState(true);
 
@@ -30,8 +31,7 @@ const HomeScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView className="bg-gray-900">
-      <StatusBar barStyle="light-content" />
-      <View className="min-h-screen bg-gray-900 px-6">
+      <View className="min-h-screen px-6">
         {/* Main Logo Text */}
         <Text className="text-3xl text-white font-bold text-center">
           Task
@@ -66,9 +66,14 @@ const HomeScreen = ({ navigation }: Props) => {
             <AddTaskComponent addTask={addTask} cancel={setShowAddButton} />
           )}
         </View>
+        <Button onPress={() => router.push("/(drawer)")} title="Go Test" />
+        <Button
+          onPress={() => DrawerActions.openDrawer()}
+          title="Open Drawer"
+        />
       </View>
     </SafeAreaView>
   );
 };
 
-export default HomeScreen;
+export default index;

@@ -1,5 +1,6 @@
-import { View, Text, TextInput } from "react-native";
 import React, { useState } from "react";
+import { TextInput, View } from "react-native";
+
 import Button from "./Button";
 import Gap from "./Gap";
 
