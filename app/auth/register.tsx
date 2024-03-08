@@ -76,7 +76,7 @@ const Register = (props: Props) => {
   };
 
   return (
-    <View>
+    <View className="px-6">
       <PText className="font-medium text-xl text-center">Register</PText>
 
       {/* Form */}

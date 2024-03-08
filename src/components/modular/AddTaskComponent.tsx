@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 
 import { Button } from "react-native-paper";
-import Gap from "./Gap";
+import Gap from "./molecular/Gap";
 
 type Props = {
   addTask: (val: string) => void;

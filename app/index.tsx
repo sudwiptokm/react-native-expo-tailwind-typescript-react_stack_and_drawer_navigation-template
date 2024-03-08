@@ -55,7 +55,7 @@ const Index = (props: Props) => {
   }, [activeCarousel]);
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 mx-6">
       <PText className="text-center text-3xl font-bold mt-10">
         Welcome to ZenCheck
       </PText>

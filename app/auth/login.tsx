@@ -4,7 +4,7 @@ import { Button, TextInput } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
-import Gap from "../../src/components/modular/Gap";
+import Gap from "../../src/components/modular/molecular/Gap";
 import Hr from "../../src/components/modular/molecular/Hr";
 import PrimaryButton from "../../src/components/modular/molecular/buttons/PrimaryButton";
 import PText from "../../src/components/modular/molecular/texts/PText";
@@ -46,7 +46,7 @@ const Login = (props: Props) => {
   };
 
   return (
-    <View>
+    <View className="px-6">
       <PText className="font-medium text-3xl text-primary text-center mb-20">
         Welcome Back
       </PText>
@@ -123,7 +123,9 @@ const Login = (props: Props) => {
         </View>
 
         <Gap height="h-5" />
-        <Button mode="contained">Go to home</Button>
+        <Button mode="contained" onPress={() => router.push("/app/home")}>
+          Go to home
+        </Button>
       </View>
     </View>
   );
