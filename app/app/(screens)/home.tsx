@@ -1,4 +1,5 @@
-import { Button, FAB } from "react-native-paper";
+import { router, useNavigation } from "expo-router";
+import React, { useState } from "react";
 import {
   Pressable,
   SafeAreaView,
@@ -6,17 +7,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
-import { router, useNavigation } from "expo-router";
+import { Button, FAB } from "react-native-paper";
 
-import AddTaskComponent from "../../../src/components/modular/AddTaskComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerActions } from "@react-navigation/native";
+import AddTaskComponent from "../../../src/components/modular/AddTaskComponent";
+import TaskView from "../../../src/components/modular/TaskView";
 import Gap from "../../../src/components/modular/molecular/Gap";
 import HomeHeader from "../../../src/components/modular/molecular/headers/HomeHeader";
-import TaskView from "../../../src/components/modular/TaskView";
-import { Task_Data_Type } from "../../../src/utils/types";
 import { taskData } from "../../../src/utils/data";
+import { Task_Data_Type } from "../../../src/utils/types";
 
 type Props = object;
 
@@ -55,7 +55,7 @@ const Index = (props: Props) => {
     <SafeAreaView>
       <View className="min-h-screen px-6">
         {/* Main Logo Text */}
-        <HomeHeader navigation={navigation}/>
+        <HomeHeader navigation={navigation} />
 
         {/* Task Viewer */}
         <View className="mt-10">
@@ -111,7 +111,7 @@ const Index = (props: Props) => {
       </View>
       <FAB
         icon="plus"
-        onPress={() => console.log("Pressed")}
+        onPress={() => router.push("app/task/create-task")}
         className="absolute right-0 bottom-10 m-4 bg-surface"
         variant="surface"
       />

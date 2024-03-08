@@ -1,5 +1,5 @@
-import React from "react";
 import { Stack } from "expo-router";
+import React from "react";
 
 type Props = object;
 
@@ -12,6 +12,7 @@ const Layout = (props: Props) => {
       }}
     >
       <Stack.Screen name="home" />
+      <Stack.Screen name="task" />
       <Stack.Screen name="test" />
     </Stack>
   );
