@@ -4,9 +4,12 @@ import {
   MD3DarkTheme as DefaultTheme,
   PaperProvider,
 } from "react-native-paper";
+import { enGB, registerTranslation } from "react-native-paper-dates";
 
-import { Stack } from "expo-router";
 import React from "react";
+import { Stack } from "expo-router";
+
+registerTranslation("en-GB", enGB);
 
 type Props = object;
 

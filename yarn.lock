@@ -7664,7 +7664,14 @@ react-native-pager-view@6.2.3:
   resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.2.3.tgz"
   integrity sha512-dqVpXWFtPNfD3D2QQQr8BP+ullS5MhjRJuF8Z/qml4QTILcrWaW8F5iAxKkQR3Jl0ikcEryG/+SQlNcwlo0Ggg==
 
-react-native-paper@^5.12.3:
+react-native-paper-dates@^0.22.3:
+  version "0.22.3"
+  resolved "https://registry.npmjs.org/react-native-paper-dates/-/react-native-paper-dates-0.22.3.tgz"
+  integrity sha512-3zmhN09Z06SnYzHKEui7NRzwpxA/CkzlEo57pKiLZIg5TbfqtGu6WPTQZ17CpymfIhhyWZgPWcRTPasBr0XyJA==
+  dependencies:
+    color "^4.2.3"
+
+react-native-paper@*, react-native-paper@^5.12.3:
   version "5.12.3"
   resolved "https://registry.npmjs.org/react-native-paper/-/react-native-paper-5.12.3.tgz"
   integrity sha512-nH1e1pGPE/aOE5YR2GRX7CfMHFA9cAfrAfgCtwL4amJPDZCoVjc5yt2VDiUE1rT+JUfk0qdICMP3UggxvjMgug==
