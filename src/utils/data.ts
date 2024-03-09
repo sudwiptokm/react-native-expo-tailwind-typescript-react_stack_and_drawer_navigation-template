@@ -1,7 +1,87 @@
-import { Task_Data_Type } from "./types";
+import { TaskDTO } from "../models/task/TaskSchema";
 
-export const taskData: Task_Data_Type[] = [
-  { name: "Wake Up at 7.00am" },
-  { name: "Brush Teeth" },
-  { name: "Perform Morning Prayer" },
+export const TypeSuggestions = ["Work", "Personal", "Shopping", "Others"];
+
+export const DummyTaskData: TaskDTO[] = [
+  {
+    id: "e9483435-6a83-4b9b-a7a9-6b01b05c8261",
+    name: "Complete project proposal",
+    description: "Write and submit the project proposal for approval",
+    isCompleted: false,
+    createdAt: "Mar 9th 24",
+    updatedAt: "Mar 9th 24",
+    type: "Work",
+    priority: "high",
+    startDate: "Mar 10th 24",
+    endDate: "Mar 15th 24",
+    startTime: "08:00 AM",
+    endTime: "10:00 AM",
+    hasReminder: true,
+    subTasks: [
+      {
+        id: "fb54617e-310c-4e8a-bcd2-6c0b69ddac50",
+        name: "Research project requirements",
+        createdAt: "Mar 9th 24",
+        updatedAt: "Mar 9th 24",
+        isCompleted: true,
+        startDate: "Mar 10th 24",
+        endDate: "Mar 12th 24",
+        startTime: "09:00 AM",
+        endTime: "11:00 AM",
+        priority: "medium",
+      },
+      {
+        id: "dc020c97-5352-4b0d-9103-cf4b9b41cfa3",
+        name: "Draft proposal outline",
+        createdAt: "Mar 9th 24",
+        updatedAt: "Mar 9th 24",
+        isCompleted: true,
+        startDate: "Mar 11th 24",
+        endDate: "Mar 12th 24",
+        startTime: "10:00 AM",
+        endTime: "12:00 PM",
+        priority: "medium",
+      },
+    ],
+    notes: [
+      "Make sure to include budget estimates",
+      "Review proposal guidelines before submission",
+    ],
+  },
+  {
+    id: "8d1e79d9-4529-4823-bc34-5a2821b8e6b3",
+    name: "Complete workout routine",
+    isCompleted: false,
+    createdAt: "Mar 10th 24",
+    updatedAt: "Mar 10th 24",
+    type: "Personal",
+    priority: "medium",
+    startDate: "Mar 10th 24",
+    endDate: "Mar 10th 24",
+    startTime: "06:00 PM",
+    endTime: "07:00 PM",
+    hasReminder: false,
+    subTasks: [
+      {
+        id: "9c174f7c-6a8b-474e-bc22-ded5c7d9b9ff",
+        name: "Warm-up exercises",
+        createdAt: "Mar 10th 24",
+        updatedAt: "Mar 10th 24",
+        isCompleted: true,
+        priority: "low",
+      },
+      {
+        id: "94bc1771-3e46-4d3e-9777-105ae8007eac",
+        name: "Strength training",
+        createdAt: "Mar 10th 24",
+        updatedAt: "Mar 10th 24",
+        isCompleted: true,
+        priority: "medium",
+      },
+    ],
+    notes: [
+      "Focus on proper form during strength training",
+      "Increase intensity of cardio workout",
+    ],
+  },
 ];

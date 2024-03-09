@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const SubTaskSchema = z.object({
+  id: z.string(),
   name: z.string(),
   createdAt: z.string(),
   updatedAt: z.string().optional(),
@@ -16,6 +17,7 @@ export type SubTaskDTO = z.infer<typeof SubTaskSchema>;
 // -----------------------------------------------------------------------
 
 export const TaskSchema = z.object({
+  id: z.string(),
   name: z.string(),
   description: z.string().optional(),
   isCompleted: z.boolean(),

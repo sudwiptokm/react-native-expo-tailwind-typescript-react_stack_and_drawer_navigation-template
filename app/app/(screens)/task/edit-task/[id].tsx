@@ -1,3 +1,4 @@
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import {
@@ -8,30 +9,52 @@ import {
   TextInput,
 } from "react-native-paper";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
+import { SubTaskDTO, TaskDTO } from "../../../../../src/models/task/TaskSchema";
+import {
+  selectSingleTask,
+  updateTask,
+} from "../../../../../src/redux/slices/TaskSlice";
 
-import { router } from "expo-router";
+import PrioritySelector from "@components/complex/prioritySelector/PrioritySelector";
+import SecondaryHeader from "@components/modular/molecular/headers/SecondaryHeader";
+import PText from "@components/modular/molecular/texts/PText";
 import moment from "moment";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { v4 as uuidv4 } from "uuid";
-import PrioritySelector from "../../../../src/components/complex/prioritySelector/PrioritySelector";
-import SecondaryHeader from "../../../../src/components/modular/molecular/headers/SecondaryHeader";
-import PText from "../../../../src/components/modular/molecular/texts/PText";
-import { TaskDTO } from "../../../../src/models/task/TaskSchema";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../../../src/redux/hooks";
 
 type Props = object;
 
-const CreateTask = (props: Props) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState<"low" | "medium" | "high">();
-  const [type, setType] = useState("");
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
-  const [startTime, setStartTime] = useState(
-    moment(new Date()).format("hh:mm A"),
+const EditTask = (props: Props) => {
+  // Redux
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const task = useAppSelector((state) => selectSingleTask(state, id!));
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState(task?.name);
+  const [description, setDescription] = useState(task?.description);
+  const [priority, setPriority] = useState<"low" | "medium" | "high">(
+    task?.priority as "low" | "medium" | "high",
   );
-  const [endTime, setEndTime] = useState(moment(new Date()).format("hh:mm A"));
-  const [hasReminder, setHasReminder] = useState(false);
+  const [type, setType] = useState(task?.type);
+  const [startDate, setStartDate] = useState<Date>(
+    moment(task?.startDate, "MMM Do YY").toDate() ?? new Date(),
+  );
+  const [endDate, setEndDate] = useState<Date>(
+    moment(task?.endDate, "MMM Do YY").toDate() ?? new Date(),
+  );
+  const [startTime, setStartTime] = useState(
+    task?.startTime ?? moment(new Date()).format("hh:mm A"),
+  );
+  const [endTime, setEndTime] = useState(
+    task?.endTime ?? moment(new Date()).format("hh:mm A"),
+  );
+  const [hasReminder, setHasReminder] = useState(task?.hasReminder);
+
+  const [subTasks, setSubTasks] = useState<SubTaskDTO[] | undefined>(
+    task?.subTasks,
+  );
+  const [notes, setNotes] = useState<string[] | undefined>(task?.notes);
 
   //   time pickers
   const [visible1, setVisible1] = React.useState(false);
@@ -54,22 +77,25 @@ const CreateTask = (props: Props) => {
       setNameError(true);
     } else {
       const data: TaskDTO = {
-        name,
+        name: name!,
         description,
         isCompleted: false,
         createdAt: new Date().toISOString(),
         type,
         priority,
-        startDate: startDate ? startDate.toISOString() : undefined,
-        endDate: endDate ? endDate.toISOString() : undefined,
+        startDate: startDate
+          ? moment(startDate).format("MMM Do YY")
+          : undefined,
+        endDate: endDate ? moment(endDate).format("MMM Do YY") : undefined,
         startTime,
         endTime,
         hasReminder,
-        subTasks: [],
-        notes: [],
-        id: uuidv4(),
+        subTasks,
+        notes,
+        id: id!,
       };
-      console.log({ data });
+
+      dispatch(updateTask(data));
 
       router.push("app/home");
     }
@@ -77,7 +103,7 @@ const CreateTask = (props: Props) => {
 
   return (
     <View className="mx-6 flex-1">
-      <SecondaryHeader title="Create Task" />
+      <SecondaryHeader title="Update Task" />
 
       {/* Form */}
       <ScrollView className="mt-12 flex-1">
@@ -165,7 +191,7 @@ const CreateTask = (props: Props) => {
               locale="en-GB"
               label="Start Date"
               value={!startDate ? new Date() : startDate}
-              onChange={(d) => setStartDate(d)}
+              onChange={(d) => setStartDate(d as Date)}
               inputMode="start"
               mode="outlined"
               validRange={{ startDate: new Date() }}
@@ -174,7 +200,7 @@ const CreateTask = (props: Props) => {
               locale="en-GB"
               label="End Date"
               value={!endDate ? (startDate ? startDate : new Date()) : endDate}
-              onChange={(d) => setEndDate(d)}
+              onChange={(d) => setEndDate(d as Date)}
               inputMode="start"
               mode="outlined"
               validRange={{
@@ -206,12 +232,12 @@ const CreateTask = (props: Props) => {
               }}
               hours={
                 startTime !== ""
-                  ? parseInt(startTime.split(":")[0], 10)
+                  ? parseInt(startTime!.split(":")[0], 10)
                   : parseInt(moment(new Date()).format("HH"), 10)
               }
               minutes={
                 startTime !== ""
-                  ? parseInt(startTime.split(":")[1], 10)
+                  ? parseInt(startTime!.split(":")[1], 10)
                   : parseInt(moment(new Date()).format("MM"), 10)
               }
               locale="en-GB"
@@ -268,7 +294,7 @@ const CreateTask = (props: Props) => {
               style={{ alignSelf: "center", width: "50%" }}
               compact
             >
-              Create
+              Update
             </Button>
           </View>
         </KeyboardAwareScrollView>
@@ -277,4 +303,4 @@ const CreateTask = (props: Props) => {
   );
 };
 
-export default CreateTask;
+export default EditTask;
