@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "react-native-paper";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { SubTaskDTO, TaskDTO } from "../../../../../src/models/task/TaskSchema";
 import {
   selectSingleTask,
@@ -102,203 +103,233 @@ const EditTask = (props: Props) => {
   };
 
   return (
-    <View className="mx-6 flex-1">
-      <SecondaryHeader title="Update Task" />
+    <View className="flex-1">
+      <View className="mx-6 flex-1">
+        <SecondaryHeader title="Update Task" />
 
-      {/* Form */}
-      <ScrollView className="mt-12 flex-1">
-        <KeyboardAwareScrollView extraHeight={200}>
-          {/* Name and Type */}
-          <View className="flex-row justify-center w-full gap-x-6">
-            <View className="flex-1">
-              {/* Name */}
-              <TextInput
-                label="Task Name *"
-                value={name}
-                onChangeText={setName}
-                onBlur={() => {
-                  if (name === "") {
-                    setNameError(true);
-                  } else {
-                    setNameError(false);
-                  }
-                }}
-              />
-              {nameError && (
-                <HelperText type="error" visible={nameError}>
-                  Name is required
-                </HelperText>
-              )}
-            </View>
-            {/* Type */}
-            <View
-              className="flex-1"
-              onLayout={(event) => {
-                event.target.measure((x, y, width, height, pageX, pageY) => {
-                  setMenuAnchor({
-                    x: pageX,
-                    y: y + pageY + height,
+        {/* Form */}
+        <ScrollView className="mt-12 flex-1">
+          <KeyboardAwareScrollView extraHeight={200}>
+            {/* Name and Type */}
+            <View className="flex-row justify-center w-full gap-x-6">
+              <View className="flex-1">
+                {/* Name */}
+                <TextInput
+                  label="Task Name *"
+                  value={name}
+                  onChangeText={setName}
+                  onBlur={() => {
+                    if (name === "") {
+                      setNameError(true);
+                    } else {
+                      setNameError(false);
+                    }
+                  }}
+                />
+                {nameError && (
+                  <HelperText type="error" visible={nameError}>
+                    Name is required
+                  </HelperText>
+                )}
+              </View>
+              {/* Type */}
+              <View
+                className="flex-1"
+                onLayout={(event) => {
+                  event.target.measure((x, y, width, height, pageX, pageY) => {
+                    setMenuAnchor({
+                      x: pageX,
+                      y: y + pageY + height,
+                    });
                   });
-                });
-              }}
-            >
-              <TextInput
-                label="Type"
-                value={type}
-                onChangeText={setType}
-                onFocus={() => setShowMenu(true)}
-              />
-              <Menu
-                visible={showMenu}
-                onDismiss={() => setShowMenu(false)}
-                anchor={{ x: menuAnchor?.x ?? 0, y: menuAnchor?.y ?? 0 }}
-                anchorPosition="bottom"
+                }}
               >
-                {["Personal", "Work", "Study", "Other"].map((item, index) => (
+                <TextInput
+                  label="Type"
+                  value={type}
+                  onChangeText={setType}
+                  onFocus={() => setShowMenu(true)}
+                />
+                <Menu
+                  visible={showMenu}
+                  onDismiss={() => setShowMenu(false)}
+                  anchor={{ x: menuAnchor?.x ?? 0, y: menuAnchor?.y ?? 0 }}
+                  anchorPosition="bottom"
+                >
+                  {["Personal", "Work", "Study", "Other"].map((item, index) => (
+                    <Menu.Item
+                      key={index}
+                      onPress={() => {
+                        setType(item);
+                        setShowMenu(false);
+                      }}
+                      title={item}
+                    />
+                  ))}
                   <Menu.Item
-                    key={index}
+                    key={5}
                     onPress={() => {
-                      setType(item);
+                      setType(type);
                       setShowMenu(false);
                     }}
-                    title={item}
+                    title={`+ ${type !== "" ? type : "Your Type"}`}
                   />
-                ))}
-                <Menu.Item
-                  key={5}
-                  onPress={() => {
-                    setType(type);
-                    setShowMenu(false);
-                  }}
-                  title={`+ ${type !== "" ? type : "Your Type"}`}
-                />
-              </Menu>
+                </Menu>
+              </View>
             </View>
-          </View>
-          {/* Description */}
-          <View className="mt-6">
-            <TextInput
-              label="Description"
-              value={description}
-              onChangeText={setDescription}
-              multiline
-            />
-          </View>
+            {/* Description */}
+            <View className="mt-6">
+              <TextInput
+                label="Description"
+                value={description}
+                onChangeText={setDescription}
+                multiline
+              />
+            </View>
 
-          {/* Date Pickers */}
-          <View className="mt-6 flex-row items-center gap-x-6">
-            <DatePickerInput
-              locale="en-GB"
-              label="Start Date"
-              value={!startDate ? new Date() : startDate}
-              onChange={(d) => setStartDate(d as Date)}
-              inputMode="start"
-              mode="outlined"
-              validRange={{ startDate: new Date() }}
-            />
-            <DatePickerInput
-              locale="en-GB"
-              label="End Date"
-              value={!endDate ? (startDate ? startDate : new Date()) : endDate}
-              onChange={(d) => setEndDate(d as Date)}
-              inputMode="start"
-              mode="outlined"
-              validRange={{
-                startDate: startDate ? startDate : new Date(),
-              }}
-            />
-          </View>
+            {/* Date Pickers */}
+            <View className="mt-6 flex-row items-center gap-x-6">
+              <DatePickerInput
+                locale="en-GB"
+                label="Start Date"
+                value={!startDate ? new Date() : startDate}
+                onChange={(d) => setStartDate(d as Date)}
+                inputMode="start"
+                mode="outlined"
+                validRange={{ startDate: new Date() }}
+              />
+              <DatePickerInput
+                locale="en-GB"
+                label="End Date"
+                value={
+                  !endDate ? (startDate ? startDate : new Date()) : endDate
+                }
+                onChange={(d) => setEndDate(d as Date)}
+                inputMode="start"
+                mode="outlined"
+                validRange={{
+                  startDate: startDate ? startDate : new Date(),
+                }}
+              />
+            </View>
 
-          {/* Time Pickers */}
-          <View className="mt-6 flex-row items-center gap-x-6">
-            <TextInput
-              label="Start Time"
-              value={startTime}
-              onFocus={() => setVisible1(true)}
-              right={
-                <TextInput.Icon
-                  icon="clock"
-                  onPress={() => setVisible1(true)}
-                />
-              }
-              style={{ flex: 1 }}
-            />
-            <TimePickerModal
-              visible={visible1}
-              onDismiss={() => setVisible1(false)}
-              onConfirm={({ hours, minutes }) => {
-                setVisible1(false);
-                setStartTime(moment({ hours, minutes }).format("hh:mm A"));
-              }}
-              hours={
-                startTime !== ""
-                  ? parseInt(startTime!.split(":")[0], 10)
-                  : parseInt(moment(new Date()).format("HH"), 10)
-              }
-              minutes={
-                startTime !== ""
-                  ? parseInt(startTime!.split(":")[1], 10)
-                  : parseInt(moment(new Date()).format("MM"), 10)
-              }
-              locale="en-GB"
-            />
-            <TextInput
-              label="End Time"
-              value={endTime}
-              onFocus={() => setVisible2(true)}
-              right={
-                <TextInput.Icon
-                  icon="clock"
-                  onPress={() => setVisible2(true)}
-                />
-              }
-              style={{ flex: 1 }}
-            />
-            <TimePickerModal
-              visible={visible2}
-              onDismiss={() => setVisible2(false)}
-              onConfirm={({ hours, minutes }) => {
-                setVisible2(false);
-                setEndTime(moment({ hours, minutes }).format("hh:mm A"));
-              }}
-              hours={
-                endTime !== ""
-                  ? parseInt(endTime.split(":")[0], 10)
-                  : parseInt(moment(new Date()).format("HH"), 10)
-              }
-              minutes={
-                endTime !== ""
-                  ? parseInt(endTime.split(":")[1], 10)
-                  : parseInt(moment(new Date()).format("MM"), 10)
-              }
-              locale="en-GB"
-            />
-          </View>
+            {/* Time Pickers */}
+            <View className="mt-6 flex-row items-center gap-x-6">
+              <TextInput
+                label="Start Time"
+                value={startTime}
+                onFocus={() => setVisible1(true)}
+                right={
+                  <TextInput.Icon
+                    icon="clock"
+                    onPress={() => setVisible1(true)}
+                  />
+                }
+                style={{ flex: 1 }}
+              />
 
-          {/* Priority Selectors */}
-          <View className="mt-6 flex-row items-center justify-between">
-            <PrioritySelector current={priority} setPriority={setPriority} />
-          </View>
+              <TextInput
+                label="End Time"
+                value={endTime}
+                onFocus={() => setVisible2(true)}
+                right={
+                  <TextInput.Icon
+                    icon="clock"
+                    onPress={() => setVisible2(true)}
+                  />
+                }
+                style={{ flex: 1 }}
+              />
+            </View>
 
-          {/* Reminder */}
-          <View className="flex-row justify-between items-center mt-10">
-            <PText className="font-semibold text-xl">Reminder</PText>
-            <Switch value={hasReminder} onValueChange={setHasReminder} />
-          </View>
+            {/* Priority Selectors */}
+            <View className="mt-6 flex-row items-center justify-between">
+              <PrioritySelector current={priority} setPriority={setPriority} />
+            </View>
 
-          {/* Submit Button */}
-          <View className="mt-12 flex justify-center">
-            <Button
-              onPress={createTask}
-              mode="contained"
-              style={{ alignSelf: "center", width: "50%" }}
-              compact
-            >
-              Update
-            </Button>
-          </View>
-        </KeyboardAwareScrollView>
-      </ScrollView>
+            {/* Reminder */}
+            <View className="flex-row justify-between items-center mt-10">
+              <PText className="font-semibold text-xl">Reminder</PText>
+              <Switch value={hasReminder} onValueChange={setHasReminder} />
+            </View>
+
+            {/* SubTask and Notes */}
+            <View className="mt-6 flex-row justify-between">
+              <Button icon="plus">Add Sub-Tasks</Button>
+              <Button icon="plus">Add Notes</Button>
+            </View>
+
+            {/* Submit Button */}
+            <View className="mt-12 flex justify-center">
+              <Button
+                onPress={createTask}
+                mode="contained"
+                style={{ alignSelf: "center", width: "50%" }}
+                compact
+              >
+                Update
+              </Button>
+            </View>
+          </KeyboardAwareScrollView>
+        </ScrollView>
+      </View>
+
+      {/* time picker modals */}
+      {visible1 && (
+        <Animated.View
+          className="bg-background/95 absolute top-0 bottom-0 left-0 right-0"
+          entering={FadeIn}
+          exiting={FadeOut}
+        >
+          <TimePickerModal
+            visible={visible1}
+            onDismiss={() => setVisible1(false)}
+            onConfirm={({ hours, minutes }) => {
+              setVisible1(false);
+              setStartTime(moment({ hours, minutes }).format("hh:mm A"));
+            }}
+            hours={
+              startTime !== ""
+                ? parseInt(startTime.split(":")[0], 10)
+                : parseInt(moment(new Date()).format("HH"), 10)
+            }
+            minutes={
+              startTime !== ""
+                ? parseInt(startTime.split(":")[1], 10)
+                : parseInt(moment(new Date()).format("MM"), 10)
+            }
+            locale="en-GB"
+          />
+        </Animated.View>
+      )}
+
+      {visible2 && (
+        <Animated.View
+          className="bg-background/95 absolute top-0 bottom-0 left-0 right-0"
+          entering={FadeIn}
+          exiting={FadeOut}
+        >
+          <TimePickerModal
+            visible={visible2}
+            onDismiss={() => setVisible2(false)}
+            onConfirm={({ hours, minutes }) => {
+              setVisible2(false);
+              setEndTime(moment({ hours, minutes }).format("hh:mm A"));
+            }}
+            hours={
+              endTime !== ""
+                ? parseInt(endTime.split(":")[0], 10)
+                : parseInt(moment(new Date()).format("HH"), 10)
+            }
+            minutes={
+              endTime !== ""
+                ? parseInt(endTime.split(":")[1], 10)
+                : parseInt(moment(new Date()).format("MM"), 10)
+            }
+            locale="en-GB"
+          />
+        </Animated.View>
+      )}
     </View>
   );
 };
